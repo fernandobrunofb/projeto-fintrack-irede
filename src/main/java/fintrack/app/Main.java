@@ -1,8 +1,5 @@
 package fintrack.app;
 
-import fintrack.model.Transacao;
-import fintrack.model.TransacaoMensal;
-
 import java.util.Scanner;
 
 public class Main {
