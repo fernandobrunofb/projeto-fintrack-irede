@@ -1,5 +1,7 @@
 package fintrack.app;
 
+import fintrack.model.Transacao;
+
 import java.util.Scanner;
 
 public class Main {
@@ -32,4 +34,5 @@ public class Main {
 
         scanner.close();
     }
+
 }
