@@ -1,11 +1,13 @@
 package fintrack.app;
 
 import fintrack.model.Transacao;
+import fintrack.model.TransacaoMensal;
 
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+
         Scanner scanner = new Scanner(System.in);
         int opcao;
 
@@ -33,6 +35,7 @@ public class Main {
         } while (opcao != 5);
 
         scanner.close();
+
     }
 
 }
