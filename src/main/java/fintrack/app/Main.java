@@ -77,7 +77,7 @@ public class Main {
                     fintracker.adicionarTransacao(novaTransacao);
                 }
                 case 2 -> fintracker.listarTransacoes();
-                case 3 -> System.out.println("[TODO] mostrar saldo");
+                case 3 -> fintracker.calcularSaldoTotal();
                 case 4 -> System.out.println("[TODO] remover transação");
                 case 5 -> System.out.println("Saindo... até mais!");
                 default -> System.out.println("Opção inválida!");

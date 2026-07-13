@@ -1,5 +1,6 @@
 package fintrack.controller;
 
+import fintrack.model.TipoTransacao;
 import fintrack.model.Transacao;
 import java.util.ArrayList;
 
@@ -21,4 +22,19 @@ public class FinTracker {
             System.out.println(i + " - " + transacoes.get(i).exibirDetalhes());
         }
     }
+
+    public void calcularSaldoTotal() {
+        double saldo = 0;
+
+        for (Transacao t : transacoes) {
+            if (t.getTipo() == TipoTransacao.ENTRADA) {
+                saldo += t.getValor();
+            } else if (t.getTipo() == TipoTransacao.SAIDA) {
+                saldo -= t.getValor();
+            }
+        }
+
+        System.out.println("Saldo atual: R$ " + saldo);
+    }
+
 }
