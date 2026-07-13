@@ -10,4 +10,15 @@ public class FinTracker {
         transacoes.add(transacao);
         System.out.println("Transação adicionada com sucesso!");
     }
+
+    public void listarTransacoes() {
+        if (transacoes.isEmpty()) {
+            System.out.println("Nenhuma transação cadastrada.");
+            return;
+        }
+
+        for (int i = 0; i < transacoes.size(); i++) {
+            System.out.println(i + " - " + transacoes.get(i).exibirDetalhes());
+        }
+    }
 }

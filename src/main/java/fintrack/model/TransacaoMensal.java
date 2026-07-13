@@ -1,10 +1,12 @@
 package fintrack.model;
 
+import java.time.LocalDate;
+
 public class TransacaoMensal extends Transacao {
     private int diaRecorrencia;
 
-    public TransacaoMensal(String descricao, double valor, String tipo, int diaRecorrencia) {
-        super(descricao, valor, tipo);
+    public TransacaoMensal(String descricao, double valor, TipoTransacao tipo, LocalDate data, int diaRecorrencia) {
+        super(descricao, valor, tipo, data);
         this.diaRecorrencia = diaRecorrencia;
     }
 
@@ -14,6 +16,6 @@ public class TransacaoMensal extends Transacao {
 
     @Override
     public String exibirDetalhes() {
-        return "[Mensal — dia " + diaRecorrencia + "] " + descricao + " — R$ " + valor + " (" + tipo + ")";
+        return "[Mensal – dia " + diaRecorrencia + "] " + descricao + " – R$ " + valor + " (" + tipo + ") – Cadastrado em: " + data;
     }
 }
