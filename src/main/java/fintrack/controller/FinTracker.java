@@ -1,5 +1,6 @@
 package fintrack.controller;
 
+import fintrack.exceptions.EntradaInvalidaException;
 import fintrack.model.TipoTransacao;
 import fintrack.model.Transacao;
 import fintrack.model.TransacaoAvulsa;
@@ -12,18 +13,26 @@ import java.util.Scanner;
 public class FinTracker {
     private ArrayList<Transacao> transacoes = new ArrayList<>();
 
-    public void cadastrarTransacao(Scanner scanner) {
+    public void cadastrarTransacao(Scanner scanner) throws EntradaInvalidaException {
         System.out.print("Descrição: ");
         scanner.nextLine();
         String descricao = scanner.nextLine();
+
+        if (descricao.isBlank()) {
+            throw new EntradaInvalidaException("A descrição não pode ser vazia.");
+        }
 
         System.out.print("Valor: ");
         double valor = scanner.nextDouble();
         scanner.nextLine();
 
+        if (valor <= 0) {
+            throw new EntradaInvalidaException("O valor deve ser maior que zero.");
+        }
+
         int tipoEscolhido;
         do {
-            System.out.print("Tipo (1 - entrada / 2 - saida): ");
+            System.out.print("Tipo (1 - entrada / 2 - saída): ");
             tipoEscolhido = scanner.nextInt();
             scanner.nextLine();
 

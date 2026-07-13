@@ -1,6 +1,8 @@
 package fintrack.app;
 
 import fintrack.controller.FinTracker;
+import fintrack.exceptions.EntradaInvalidaException;
+
 import java.util.Scanner;
 
 public class Main {
@@ -23,7 +25,12 @@ public class Main {
             opcao = scanner.nextInt();
 
             switch (opcao) {
-                case 1 -> fintracker.cadastrarTransacao(scanner);
+                case 1 -> {
+                    try {fintracker.cadastrarTransacao(scanner);
+                    } catch (EntradaInvalidaException e) {
+                        System.out.println("Erro: " + e.getMessage());
+                    }
+                }
                 case 2 -> fintracker.listarTransacoes();
                 case 3 -> fintracker.calcularSaldoTotal();
                 case 4 -> fintracker.removerTransacao(scanner);
