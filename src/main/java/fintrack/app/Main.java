@@ -2,6 +2,7 @@ package fintrack.app;
 
 import fintrack.controller.FinTracker;
 import fintrack.exceptions.EntradaInvalidaException;
+import fintrack.utils.LeitorEntrada;
 
 import java.util.Scanner;
 
@@ -20,9 +21,8 @@ public class Main {
                     3. Mostrar saldo atual
                     4. Remover transação
                     5. Sair""");
-            System.out.print("Escolha uma opção: ");
 
-            opcao = scanner.nextInt();
+            opcao = LeitorEntrada.lerInteiro(scanner, "Escolha uma opção: ");
 
             switch (opcao) {
                 case 1 -> {
