@@ -18,6 +18,6 @@ public class TransacaoMensal extends Transacao {
 
     @Override
     public String exibirDetalhes() {
-        return "[Mensal - dia " + diaRecorrencia + "] " + descricao + " - " + Formatador.formatarValor(valor) + " (" + tipo + ") - Cadastrado em: " + data;
+        return "[Mensal - dia " + diaRecorrencia + "] " + descricao + " - " + Formatador.formatarValor(valor) + " (" + tipo + ") - Cadastrado em: " + Formatador.formatarData(data);
     }
 }

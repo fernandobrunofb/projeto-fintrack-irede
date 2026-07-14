@@ -12,6 +12,6 @@ public class TransacaoAvulsa extends Transacao {
 
     @Override
     public String exibirDetalhes() {
-        return "[Avulsa] " + descricao + " - " + Formatador.formatarValor(valor) + " (" + tipo + ") - Data: " + data;
+        return "[Avulsa] " + descricao + " - " + Formatador.formatarValor(valor) + " (" + tipo + ") - Data: " + Formatador.formatarData(data);
     }
 }
