@@ -1,5 +1,7 @@
 package fintrack.model;
 
+import fintrack.utils.Formatador;
+
 import java.time.LocalDate;
 
 public class TransacaoAvulsa extends Transacao {
@@ -10,6 +12,6 @@ public class TransacaoAvulsa extends Transacao {
 
     @Override
     public String exibirDetalhes() {
-        return "[Avulsa] " + descricao + " – R$ " + valor + " (" + tipo + ") – Data: " + data;
+        return "[Avulsa] " + descricao + " - " + Formatador.formatarValor(valor) + " (" + tipo + ") - Data: " + data;
     }
 }

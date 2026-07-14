@@ -2,11 +2,11 @@ package fintrack.app;
 
 import fintrack.controller.FinTracker;
 import fintrack.utils.LeitorEntrada;
-
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+
         Scanner scanner = new Scanner(System.in);
         FinTracker fintracker = new FinTracker();
 
