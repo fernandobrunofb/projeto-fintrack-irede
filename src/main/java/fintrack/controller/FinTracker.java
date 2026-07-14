@@ -15,63 +15,104 @@ public class FinTracker {
     private ArrayList<Transacao> transacoes = new ArrayList<>();
 
     public void cadastrarTransacao(Scanner scanner) {
-        try {
-            System.out.print("Descrição: ");
-            String descricao = scanner.nextLine();
+        String descricao = "";
+        boolean descricaoValida = false;
 
-            if (descricao.isBlank()) {
-                throw new EntradaInvalidaException("A descrição não pode ser vazia.");
+        do {
+            try {
+                System.out.print("Descrição: ");
+                descricao = scanner.nextLine();
+
+                if (descricao.isBlank()) {
+                    throw new EntradaInvalidaException("A descrição não pode ser vazia!");
+                }
+
+                descricaoValida = true;
+            } catch (EntradaInvalidaException e) {
+                System.out.println(e.getMessage());
             }
+        } while (!descricaoValida);
 
-            double valor = LeitorEntrada.lerDouble(scanner, "Valor: ");
+        double valor = 0;
+        boolean valorValido = false;
 
-            if (valor <= 0) {
-                throw new EntradaInvalidaException("O valor deve ser maior que zero.");
+        do {
+            try {
+                valor = LeitorEntrada.lerDouble(scanner, "Valor: ");
+
+                if (valor <= 0) {
+                    throw new EntradaInvalidaException("O valor deve ser maior que zero!");
+                }
+
+                valorValido = true;
+            } catch (EntradaInvalidaException e) {
+                System.out.println(e.getMessage());
             }
+        } while (!valorValido);
 
-            int tipoEscolhido;
-            do {
+        int tipoEscolhido = 0;
+        boolean tipoValido = false;
+
+        do {
+            try {
                 tipoEscolhido = LeitorEntrada.lerInteiro(scanner, "Tipo (1 - entrada / 2 - saida): ");
 
                 if (tipoEscolhido != 1 && tipoEscolhido != 2) {
-                    System.out.println("Opção inválida! Digite 1 ou 2.");
+                    throw new EntradaInvalidaException("Opção inválida! Digite 1 ou 2.");
                 }
-            } while (tipoEscolhido != 1 && tipoEscolhido != 2);
 
-            TipoTransacao tipo = (tipoEscolhido == 1) ? TipoTransacao.ENTRADA : TipoTransacao.SAIDA;
+                tipoValido = true;
+            } catch (EntradaInvalidaException e) {
+                System.out.println(e.getMessage());
+            }
+        } while (!tipoValido);
 
-            LocalDate dataAtual = LocalDate.now();
+        TipoTransacao tipo = (tipoEscolhido == 1) ? TipoTransacao.ENTRADA : TipoTransacao.SAIDA;
 
-            int resposta;
-            do {
+        LocalDate dataAtual = LocalDate.now();
+
+        int resposta = 0;
+        boolean respostaValida = false;
+
+        do {
+            try {
                 resposta = LeitorEntrada.lerInteiro(scanner, "É uma transação mensal ou avulsa? (1 - mensal / 2 - avulsa): ");
 
                 if (resposta != 1 && resposta != 2) {
-                    System.out.println("Opção inválida! Digite 1 ou 2.");
+                    throw new EntradaInvalidaException("Opção inválida! Digite 1 ou 2.");
                 }
-            } while (resposta != 1 && resposta != 2);
 
-            Transacao novaTransacao;
-            if (resposta == 1) {
-                int dia;
-                do {
+                respostaValida = true;
+            } catch (EntradaInvalidaException e) {
+                System.out.println(e.getMessage());
+            }
+        } while (!respostaValida);
+
+        Transacao novaTransacao;
+        if (resposta == 1) {
+            int dia = 0;
+            boolean diaValido = false;
+
+            do {
+                try {
                     dia = LeitorEntrada.lerInteiro(scanner, "Dia da recorrência: ");
 
                     if (dia < 1 || dia > 31) {
-                        System.out.println("Dia inválido! Digite um valor entre 1 e 31.");
+                        throw new EntradaInvalidaException("Dia inválido! Digite um valor entre 1 e 31.");
                     }
-                } while (dia < 1 || dia > 31);
 
-                novaTransacao = new TransacaoMensal(descricao, valor, tipo, dataAtual, dia);
-            } else {
-                novaTransacao = new TransacaoAvulsa(descricao, valor, tipo, dataAtual);
-            }
+                    diaValido = true;
+                } catch (EntradaInvalidaException e) {
+                    System.out.println(e.getMessage());
+                }
+            } while (!diaValido);
 
-            adicionarTransacao(novaTransacao);
-
-        } catch (EntradaInvalidaException e) {
-            System.out.println("Erro: " + e.getMessage());
+            novaTransacao = new TransacaoMensal(descricao, valor, tipo, dataAtual, dia);
+        } else {
+            novaTransacao = new TransacaoAvulsa(descricao, valor, tipo, dataAtual);
         }
+
+        adicionarTransacao(novaTransacao);
     }
 
     public void adicionarTransacao(Transacao transacao) {
@@ -111,14 +152,22 @@ public class FinTracker {
             return;
         }
 
-        int indice;
-        do {
-            indice = LeitorEntrada.lerInteiro(scanner, "Digite o índice da transação que deseja remover: ");
+        int indice = 0;
+        boolean indiceValido = false;
 
-            if (indice < 0 || indice >= transacoes.size()) {
-                System.out.println("Índice inválido! Digite um valor entre 0 e " + (transacoes.size() - 1) + ".");
+        do {
+            try {
+                indice = LeitorEntrada.lerInteiro(scanner, "Digite o índice da transação que deseja remover: ");
+
+                if (indice < 0 || indice >= transacoes.size()) {
+                    throw new EntradaInvalidaException("Índice inválido! Digite um valor entre 0 e " + (transacoes.size() - 1) + ".");
+                }
+
+                indiceValido = true;
+            } catch (EntradaInvalidaException e) {
+                System.out.println(e.getMessage());
             }
-        } while (indice < 0 || indice >= transacoes.size());
+        } while (!indiceValido);
 
         Transacao removida = transacoes.remove(indice);
         System.out.println("Transação removida: " + removida.exibirDetalhes());
