@@ -21,7 +21,7 @@ public class FinTracker {
         do {
             try {
                 System.out.print("Descrição: ");
-                descricao = scanner.nextLine();
+                descricao = scanner.nextLine().trim();
 
                 if (descricao.isBlank()) {
                     throw new EntradaInvalidaException("A descrição não pode ser vazia!");
