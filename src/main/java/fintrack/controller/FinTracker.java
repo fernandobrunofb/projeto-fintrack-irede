@@ -5,8 +5,10 @@ import fintrack.model.TipoTransacao;
 import fintrack.model.Transacao;
 import fintrack.model.TransacaoAvulsa;
 import fintrack.model.TransacaoMensal;
+import fintrack.utils.Formatador;
 import fintrack.utils.LeitorEntrada;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -88,31 +90,37 @@ public class FinTracker {
             }
         } while (!respostaValida);
 
-        Transacao novaTransacao;
-        if (resposta == 1) {
-            int dia = 0;
-            boolean diaValido = false;
+        BigDecimal valorDecimal = BigDecimal.valueOf(valor);
 
-            do {
-                try {
-                    dia = LeitorEntrada.lerInteiro(scanner, "Dia da recorrência: ");
+        try {
+            Transacao novaTransacao;
+            if (resposta == 1) {
+                int dia = 0;
+                boolean diaValido = false;
 
-                    if (dia < 1 || dia > 31) {
-                        throw new EntradaInvalidaException("Dia inválido! Digite um valor entre 1 e 31.");
+                do {
+                    try {
+                        dia = LeitorEntrada.lerInteiro(scanner, "Dia da recorrência: ");
+
+                        if (dia < 1 || dia > 31) {
+                            throw new EntradaInvalidaException("Dia inválido! Digite um valor entre 1 e 31.");
+                        }
+
+                        diaValido = true;
+                    } catch (EntradaInvalidaException e) {
+                        System.out.println(e.getMessage());
                     }
+                } while (!diaValido);
 
-                    diaValido = true;
-                } catch (EntradaInvalidaException e) {
-                    System.out.println(e.getMessage());
-                }
-            } while (!diaValido);
+                novaTransacao = new TransacaoMensal(descricao, valorDecimal, tipo, dataAtual, dia);
+            } else {
+                novaTransacao = new TransacaoAvulsa(descricao, valorDecimal, tipo, dataAtual);
+            }
 
-            novaTransacao = new TransacaoMensal(descricao, valor, tipo, dataAtual, dia);
-        } else {
-            novaTransacao = new TransacaoAvulsa(descricao, valor, tipo, dataAtual);
+            adicionarTransacao(novaTransacao);
+        } catch (EntradaInvalidaException e) {
+            System.out.println("Não foi possível cadastrar: " + e.getMessage());
         }
-
-        adicionarTransacao(novaTransacao);
     }
 
     public void adicionarTransacao(Transacao transacao) {
@@ -132,17 +140,17 @@ public class FinTracker {
     }
 
     public void calcularSaldoTotal() {
-        double saldo = 0;
+        BigDecimal saldo = BigDecimal.ZERO;
 
         for (Transacao t : transacoes) {
             if (t.getTipo() == TipoTransacao.ENTRADA) {
-                saldo += t.getValor();
+                saldo = saldo.add(t.getValor());
             } else if (t.getTipo() == TipoTransacao.SAIDA) {
-                saldo -= t.getValor();
+                saldo = saldo.subtract(t.getValor());
             }
         }
 
-        System.out.println("Saldo atual: R$ " + saldo);
+        System.out.println("Saldo atual: " + Formatador.formatarValor(saldo));
     }
 
     public void removerTransacao(Scanner scanner) {
@@ -172,5 +180,4 @@ public class FinTracker {
         Transacao removida = transacoes.remove(indice);
         System.out.println("Transação removida: " + removida.exibirDetalhes());
     }
-
 }
