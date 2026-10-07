@@ -5,7 +5,8 @@ import fintrack.exceptions.EntradaInvalidaException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public abstract class Transacao {
+public abstract class Transacao implements Identificavel {
+    protected int id;
     protected String descricao;
     protected BigDecimal valor;
     protected TipoTransacao tipo;
@@ -46,6 +47,16 @@ public abstract class Transacao {
 
     public LocalDate getData() {
         return data;
+    }
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
     }
 
     public abstract  String exibirDetalhes();

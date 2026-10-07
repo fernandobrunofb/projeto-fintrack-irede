@@ -78,4 +78,20 @@ class TransacaoTest {
         assertThrows(EntradaInvalidaException.class, () ->
                 new TransacaoAvulsa("Mercado", VALOR, TipoTransacao.SAIDA, null));
     }
+
+    @Test
+    void deveIniciarSemId() throws EntradaInvalidaException {
+        Transacao t = new TransacaoAvulsa("Mercado", VALOR, TipoTransacao.SAIDA, DATA);
+
+        assertEquals(0, t.getId());
+    }
+
+    @Test
+    void devePermitirDefinirId() throws EntradaInvalidaException {
+        Transacao t = new TransacaoAvulsa("Mercado", VALOR, TipoTransacao.SAIDA, DATA);
+
+        t.setId(5);
+
+        assertEquals(5, t.getId());
+    }
 }
