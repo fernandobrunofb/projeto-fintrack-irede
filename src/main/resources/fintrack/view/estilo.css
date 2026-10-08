@@ -1,0 +1,77 @@
+/* ===== Paleta ===== */
+.root {
+    -cor-primaria: #1e5e4e;
+    -cor-primaria-clara: #2e7d64;
+    -cor-entrada: #2e7d32;
+    -cor-saida: #c62828;
+
+    -fx-font-size: 13px;
+    -fx-background-color: #f4f6f5;
+}
+
+/* ===== Cabeçalho ===== */
+.cabecalho {
+    -fx-background-color: -cor-primaria;
+}
+
+.titulo {
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.botao-nav {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-border-color: white;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-cursor: hand;
+}
+
+.botao-nav:hover {
+    -fx-background-color: -cor-primaria-clara;
+}
+
+/* ===== Botão de ação principal ===== */
+.botao-primario {
+    -fx-background-color: -cor-primaria;
+    -fx-text-fill: white;
+    -fx-background-radius: 4;
+    -fx-cursor: hand;
+}
+
+.botao-primario:hover {
+    -fx-background-color: -cor-primaria-clara;
+}
+
+/* ===== Tabela ===== */
+.table-view .column-header .label {
+    -fx-font-weight: bold;
+}
+
+/* ===== Relatório ===== */
+.titulo-secao {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -cor-primaria;
+}
+
+.valor-entrada {
+    -fx-text-fill: -cor-entrada;
+    -fx-font-weight: bold;
+}
+
+.valor-saida {
+    -fx-text-fill: -cor-saida;
+    -fx-font-weight: bold;
+}
+
+.valor-saldo {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.valor-saldo.negativo {
+    -fx-text-fill: -cor-saida;
+}

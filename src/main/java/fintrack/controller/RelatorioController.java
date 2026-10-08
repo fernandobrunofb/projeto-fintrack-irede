@@ -5,6 +5,8 @@ import fintrack.utils.Formatador;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
+import java.math.BigDecimal;
+
 public class RelatorioController {
 
     @FXML
@@ -17,6 +19,11 @@ public class RelatorioController {
     public void setFinTracker(FinTracker finTracker) {
         labelEntradas.setText(Formatador.formatarValor(finTracker.calcularTotalEntradas()));
         labelSaidas.setText(Formatador.formatarValor(finTracker.calcularTotalSaidas()));
-        labelSaldo.setText(Formatador.formatarValor(finTracker.calcularSaldo()));
+
+        BigDecimal saldo = finTracker.calcularSaldo();
+        labelSaldo.setText(Formatador.formatarValor(saldo));
+        if (saldo.signum() < 0) {
+            labelSaldo.getStyleClass().add("negativo");
+        }
     }
 }

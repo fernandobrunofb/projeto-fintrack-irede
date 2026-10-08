@@ -10,19 +10,20 @@
 <?import javafx.scene.layout.Region?>
 
 <BorderPane fx:id="raiz"
+            stylesheets="@estilo.css"
             xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="fintrack.controller.TelaPrincipalController">
 
     <top>
-        <HBox spacing="10" alignment="CENTER_LEFT">
+        <HBox styleClass="cabecalho" spacing="10" alignment="CENTER_LEFT">
             <padding>
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
-            <Label text="FinTrack"/>
+            <Label text="FinTrack" styleClass="titulo"/>
             <Region HBox.hgrow="ALWAYS"/>
-            <Button text="Transações" onAction="#mostrarTransacoes"/>
-            <Button text="Relatório" onAction="#mostrarRelatorio"/>
+            <Button text="Transações" styleClass="botao-nav" onAction="#mostrarTransacoes"/>
+            <Button text="Relatório" styleClass="botao-nav" onAction="#mostrarRelatorio"/>
         </HBox>
     </top>
 
@@ -51,7 +52,7 @@
                     </padding>
                     <Button fx:id="botaoRemover" text="Remover" onAction="#removerTransacao"/>
                     <Button fx:id="botaoEditar" text="Editar" onAction="#editarTransacao"/>
-                    <Button text="Nova transação" onAction="#abrirNovaTransacao"/>
+                    <Button text="Nova transação" styleClass="botao-primario" onAction="#abrirNovaTransacao"/>
                 </HBox>
             </bottom>
         </BorderPane>
