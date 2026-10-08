@@ -38,6 +38,8 @@
             <padding>
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
+            <Button fx:id="botaoRemover" text="Remover" onAction="#removerTransacao"/>
+            <Button fx:id="botaoEditar" text="Editar" onAction="#editarTransacao"/>
             <Button text="Nova transação" onAction="#abrirNovaTransacao"/>
         </HBox>
     </bottom>

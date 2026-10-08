@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class NovaTransacaoController {
+public class FormularioTransacaoController {
 
     @FXML
     private TextField campoDescricao;
@@ -32,6 +32,7 @@ public class NovaTransacaoController {
     private Spinner<Integer> spinnerDia;
 
     private FinTracker finTracker;
+    private Transacao transacaoEmEdicao;
 
     @FXML
     private void initialize() {
@@ -42,6 +43,25 @@ public class NovaTransacaoController {
 
     public void setFinTracker(FinTracker finTracker) {
         this.finTracker = finTracker;
+    }
+
+    public void editar(Transacao transacao) {
+        this.transacaoEmEdicao = transacao;
+
+        campoDescricao.setText(transacao.getDescricao());
+        campoValor.setText(transacao.getValor().toPlainString().replace(".", ","));
+        campoData.setValue(transacao.getData());
+
+        if (transacao.getTipo() == TipoTransacao.ENTRADA) {
+            radioEntrada.setSelected(true);
+        } else {
+            radioSaida.setSelected(true);
+        }
+
+        if (transacao instanceof TransacaoMensal mensal) {
+            checkMensal.setSelected(true);
+            spinnerDia.getValueFactory().setValue(mensal.getDiaRecorrencia());
+        }
     }
 
     @FXML
@@ -59,7 +79,13 @@ public class NovaTransacaoController {
                 transacao = new TransacaoAvulsa(descricao, valor, tipo, data);
             }
 
-            finTracker.cadastrar(transacao);
+            if (transacaoEmEdicao == null) {
+                finTracker.cadastrar(transacao);
+            } else {
+                transacao.setId(transacaoEmEdicao.getId());
+                finTracker.atualizar(transacao);
+            }
+
             fecharJanela();
         } catch (EntradaInvalidaException e) {
             mostrarErro("Dados inválidos", e.getMessage());
@@ -97,6 +123,7 @@ public class NovaTransacaoController {
 
     private void mostrarErro(String titulo, String mensagem) {
         Alert alerta = new Alert(Alert.AlertType.ERROR);
+        alerta.initOwner(campoDescricao.getScene().getWindow());
         alerta.setTitle(titulo);
         alerta.setHeaderText(null);
         alerta.setContentText(mensagem);

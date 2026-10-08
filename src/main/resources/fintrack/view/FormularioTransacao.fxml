@@ -14,7 +14,7 @@
 
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
-          fx:controller="fintrack.controller.NovaTransacaoController"
+          fx:controller="fintrack.controller.FormularioTransacaoController"
           hgap="10" vgap="10">
 
     <padding>

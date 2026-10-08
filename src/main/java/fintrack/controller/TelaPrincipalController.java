@@ -1,5 +1,6 @@
 package fintrack.controller;
 
+import fintrack.exceptions.PersistenciaException;
 import fintrack.model.Transacao;
 import fintrack.service.FinTracker;
 import fintrack.utils.Formatador;
@@ -9,13 +10,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class TelaPrincipalController {
 
@@ -29,6 +29,10 @@ public class TelaPrincipalController {
     private TableColumn<Transacao, String> colunaValor;
     @FXML
     private TableColumn<Transacao, String> colunaTipo;
+    @FXML
+    private Button botaoEditar;
+    @FXML
+    private Button botaoRemover;
 
     private FinTracker finTracker;
 
@@ -42,29 +46,10 @@ public class TelaPrincipalController {
                 new SimpleStringProperty(Formatador.formatarValor(c.getValue().getValor())));
         colunaTipo.setCellValueFactory(c ->
                 new SimpleStringProperty(c.getValue().getTipo().toString()));
-    }
 
-    @FXML
-    private void abrirNovaTransacao() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fintrack/view/NovaTransacao.fxml"));
-            Parent raiz = loader.load();
-
-            NovaTransacaoController controller = loader.getController();
-            controller.setFinTracker(finTracker);
-
-            Stage janela = new Stage();
-            janela.setTitle("Nova transação");
-            janela.initModality(Modality.APPLICATION_MODAL);
-            janela.initOwner(tabelaTransacoes.getScene().getWindow());
-            janela.setScene(new Scene(raiz));
-            janela.showAndWait();
-
-            atualizarTabela();
-        } catch (IOException e) {
-            Alert alerta = new Alert(Alert.AlertType.ERROR, "Não foi possível abrir o formulário.");
-            alerta.showAndWait();
-        }
+        var semSelecao = tabelaTransacoes.getSelectionModel().selectedItemProperty().isNull();
+        botaoEditar.disableProperty().bind(semSelecao);
+        botaoRemover.disableProperty().bind(semSelecao);
     }
 
     public void setFinTracker(FinTracker finTracker) {
@@ -72,7 +57,69 @@ public class TelaPrincipalController {
         atualizarTabela();
     }
 
+    @FXML
+    private void abrirNovaTransacao() {
+        abrirFormulario("Nova transação", null);
+    }
+
+    @FXML
+    private void editarTransacao() {
+        Transacao selecionada = tabelaTransacoes.getSelectionModel().getSelectedItem();
+        abrirFormulario("Editar transação", selecionada);
+    }
+
+    @FXML
+    private void removerTransacao() {
+        Transacao selecionada = tabelaTransacoes.getSelectionModel().getSelectedItem();
+
+        Alert confirmacao = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmacao.initOwner(tabelaTransacoes.getScene().getWindow());
+        confirmacao.setTitle("Remover transação");
+        confirmacao.setHeaderText(null);
+        confirmacao.setContentText("Deseja remover \"" + selecionada.getDescricao() + "\"?");
+
+        Optional<ButtonType> resposta = confirmacao.showAndWait();
+        if (resposta.isPresent() && resposta.get() == ButtonType.OK) {
+            try {
+                finTracker.remover(selecionada.getId());
+                atualizarTabela();
+            } catch (PersistenciaException e) {
+                mostrarErro("Não foi possível remover a transação.");
+            }
+        }
+    }
+
+    private void abrirFormulario(String titulo, Transacao transacao) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fintrack/view/FormularioTransacao.fxml"));
+            Parent raiz = loader.load();
+
+            FormularioTransacaoController controller = loader.getController();
+            controller.setFinTracker(finTracker);
+            if (transacao != null) {
+                controller.editar(transacao);
+            }
+
+            Stage janela = new Stage();
+            janela.setTitle(titulo);
+            janela.initModality(Modality.APPLICATION_MODAL);
+            janela.initOwner(tabelaTransacoes.getScene().getWindow());
+            janela.setScene(new Scene(raiz));
+            janela.showAndWait();
+
+            atualizarTabela();
+        } catch (IOException e) {
+            mostrarErro("Não foi possível abrir o formulário.");
+        }
+    }
+
     private void atualizarTabela() {
         tabelaTransacoes.setItems(FXCollections.observableArrayList(finTracker.listar()));
+    }
+
+    private void mostrarErro(String mensagem) {
+        Alert alerta = new Alert(Alert.AlertType.ERROR, mensagem);
+        alerta.initOwner(tabelaTransacoes.getScene().getWindow());
+        alerta.showAndWait();
     }
 }
