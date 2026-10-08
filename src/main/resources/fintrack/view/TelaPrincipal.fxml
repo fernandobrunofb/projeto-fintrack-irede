@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="fintrack.controller.TelaPrincipalController">
+
+    <top>
+        <Label text="FinTrack">
+            <BorderPane.margin>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </BorderPane.margin>
+        </Label>
+    </top>
+
+    <center>
+        <TableView fx:id="tabelaTransacoes">
+            <columns>
+                <TableColumn fx:id="colunaData" text="Data" prefWidth="120"/>
+                <TableColumn fx:id="colunaDescricao" text="Descrição" prefWidth="300"/>
+                <TableColumn fx:id="colunaValor" text="Valor" prefWidth="150"/>
+                <TableColumn fx:id="colunaTipo" text="Tipo" prefWidth="120"/>
+            </columns>
+            <placeholder>
+                <Label text="Nenhuma transação cadastrada."/>
+            </placeholder>
+        </TableView>
+    </center>
+</BorderPane>
