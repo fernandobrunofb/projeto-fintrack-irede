@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.GridPane?>
+
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="fintrack.controller.RelatorioController"
+          hgap="20" vgap="15">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Resumo financeiro" GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+
+    <Label text="Total de entradas:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+    <Label fx:id="labelEntradas" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+    <Label text="Total de saídas:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+    <Label fx:id="labelSaidas" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+    <Label text="Saldo:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+    <Label fx:id="labelSaldo" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+</GridPane>

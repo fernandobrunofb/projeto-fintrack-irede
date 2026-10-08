@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -33,6 +34,10 @@ public class TelaPrincipalController {
     private Button botaoEditar;
     @FXML
     private Button botaoRemover;
+    @FXML
+    private BorderPane raiz;
+    @FXML
+    private BorderPane painelTransacoes;
 
     private FinTracker finTracker;
 
@@ -55,6 +60,27 @@ public class TelaPrincipalController {
     public void setFinTracker(FinTracker finTracker) {
         this.finTracker = finTracker;
         atualizarTabela();
+    }
+
+    @FXML
+    private void mostrarTransacoes() {
+        raiz.setCenter(painelTransacoes);
+        atualizarTabela();
+    }
+
+    @FXML
+    private void mostrarRelatorio() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fintrack/view/Relatorio.fxml"));
+            Parent telaRelatorio = loader.load();
+
+            RelatorioController controller = loader.getController();
+            controller.setFinTracker(finTracker);
+
+            raiz.setCenter(telaRelatorio);
+        } catch (IOException e) {
+            mostrarErro("Não foi possível abrir o relatório.");
+        }
     }
 
     @FXML
