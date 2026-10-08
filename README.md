@@ -1,30 +1,35 @@
 # FinTrack
 
-Sistema de controle de finanças pessoais via console, desenvolvido em Java puro como exercício de prática de Programação Orientada a Objetos.
+Sistema de controle de finanças pessoais em Java, com interface gráfica em JavaFX e dados salvos em SQLite. Projeto de estudo.
 
 ## Funcionalidades
 
-- Cadastrar transações (entradas e saídas)
-- Listar todas as transações cadastradas
-- Calcular e exibir o saldo atual
-- Remover uma transação
+- Cadastrar, editar e remover transações (entrada ou saída, avulsa ou mensal)
+- Listar as transações numa tabela
+- Relatório com total de entradas, total de saídas e saldo
 
 ## Tecnologias
 
-- Java 17
-- Maven
+Java 21, JavaFX 21, SQLite (JDBC), JUnit 5, Maven
 
-## Menu
+## Como rodar
 
-```
-===== FINTRACK - SEU CONTROLE FINANCEIRO =====
-1. Adicionar nova transação
-2. Listar transações
-3. Mostrar saldo atual
-4. Remover transação
-5. Sair
+```bash
+mvn javafx:run
 ```
 
-## Como executar
+No IntelliJ: aba Maven → Plugins → javafx → `javafx:run`.
 
-Abre o projeto na IDE (IntelliJ, por exemplo) e roda a classe Main.java.
+O banco `fintrack.db` é criado automaticamente na primeira execução.
+
+## Testes
+
+```bash
+mvn test
+```
+
+Os testes do DAO usam um banco SQLite em memória, então não mexem nos dados reais.
+
+## Versões
+
+- `v1.0-console`: versão inicial, via console
