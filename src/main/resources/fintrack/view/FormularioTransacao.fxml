@@ -11,6 +11,7 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.ColumnConstraints?>
 
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
@@ -20,6 +21,11 @@
     <padding>
         <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
+
+    <columnConstraints>
+        <ColumnConstraints minWidth="-Infinity"/>
+        <ColumnConstraints hgrow="ALWAYS" minWidth="200"/>
+    </columnConstraints>
 
     <fx:define>
         <ToggleGroup fx:id="grupoTipo"/>

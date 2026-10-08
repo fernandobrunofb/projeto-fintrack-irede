@@ -50,7 +50,7 @@ public class TelaPrincipalController {
         colunaValor.setCellValueFactory(c ->
                 new SimpleStringProperty(Formatador.formatarValor(c.getValue().getValor())));
         colunaTipo.setCellValueFactory(c ->
-                new SimpleStringProperty(c.getValue().getTipo().toString()));
+                new SimpleStringProperty(c.getValue().getTipo().getRotulo()));
 
         var semSelecao = tabelaTransacoes.getSelectionModel().selectedItemProperty().isNull();
         botaoEditar.disableProperty().bind(semSelecao);
