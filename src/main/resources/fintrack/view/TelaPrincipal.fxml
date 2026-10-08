@@ -6,6 +6,8 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.BorderPane?>
 
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="fintrack.controller.TelaPrincipalController">
@@ -31,4 +33,12 @@
             </placeholder>
         </TableView>
     </center>
+    <bottom>
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <Button text="Nova transação" onAction="#abrirNovaTransacao"/>
+        </HBox>
+    </bottom>
 </BorderPane>
